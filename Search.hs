@@ -8,8 +8,8 @@ data SearchNode = Nil | Node Int Int Board SearchNode deriving (Eq)
 instance Ord SearchNode where
 	Nil `compare` Nil = EQ
 	(Node _ i1 _ _ ) `compare` (Node _ i2 _ _) = i1 `compare` i2
-	Nil `compare` (Node _ _ _ _ )= LT
-	(Node _ _ _ _) `compare` Nil = GT
+	Nil `compare` (Node _ _ _ _ ) 			   = LT
+	(Node _ _ _ _) `compare` Nil  			   = GT
 
 -- solver
 solve::Board -> Maybe SearchNode	
@@ -60,7 +60,7 @@ nodeList node =  node:nodeList next
 		Node _ _ _ next = node
 		
 -- returns the board in the first node
-getOriginalBoard (x:[]) 	= b
+getOriginalBoard (x:[]) = b
 	where
 		Node _ _ b _ = x
 getOriginalBoard (x:xs) = getOriginalBoard xs
