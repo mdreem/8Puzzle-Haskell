@@ -125,33 +125,3 @@ printTile Nothing = "X"
 printBoardList :: [Board] -> String
 printBoardList [] = ""
 printBoardList (x:xs) = (printBoard x) ++ "\n" ++ printBoardList xs
-
--- Test boards
-
-testBoard::Board
-testBoard = [[Just 1,Just 2,Just 3],[Just 4,Just 5,Just 6],[Just 7,Just 8, Nothing]]
-
-testBoardA::Board
-testBoardA = [[Nothing,Just 2,Just 3],[Just 4,Just 5,Just 6],[Just 7,Just 8, Just 1]]
-
-testBoardB::Board
-testBoardB = [[Just 2,Nothing,Just 3],[Just 4,Just 5,Just 6],[Just 7,Just 8, Just 1]]
-
-testBoardC::Board
-testBoardC = [[Just 1,Just 2,Just 3, Just 4],[Just 5,Just 6,Just 7, Just 8],[Just 9,Just 10,Just 11, Just 12],[Just 13,Just 14,Just 15, Nothing]]
-
-testBoardD::Board
-testBoardD = [[Just 1,Just 2,Just 3, Just 4],[Just 5,Just 7,Just 6, Just 8],[Just 9,Just 10,Just 11, Just 12],[Just 13,Just 14,Just 15, Nothing]]
-
-testBoard6S::Board
-testBoard6S = [[Nothing, Just 1, Just 2, Just 3],[Just 5,Just 6,Just 7, Just 4],[Just 9,Just 10,Just 11, Just 8],[Just 13,Just 14,Just 15, Just 12]]
-
-testBoardUS::Board
-testBoardUS = [[Just 1,Just 2,Just 3],[Just 4,Just 6,Just 5],[Just 7,Just 8, Nothing]]
-
-testBoard20S::Board
-testBoard20S = [[Just 1,Just 6,Just 4],[Just 7, Nothing,Just 8],[Just 2,Just 3, Just 5]]
-
-testBoardUS1::Board
-testBoardUS1 = [[Just 1,Just 2,Just 3],[Just 4, Just 6,Just 5],[Just 7,Just 8, Nothing]]
-

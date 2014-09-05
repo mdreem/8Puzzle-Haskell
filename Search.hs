@@ -1,3 +1,5 @@
+module Search where
+
 import Board
 import qualified Data.Heap as Heap
 
@@ -84,4 +86,3 @@ instance Show SearchNode where
     show sn = "Steps: " ++ show i ++ "\n\n" ++ printNodeList (reverse (nodeList sn))
         where
             (Node i _ _ _) = sn
-    
