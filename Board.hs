@@ -19,6 +19,13 @@ testBoardC = [[Just 1,Just 2,Just 3, Just 4],[Just 5,Just 6,Just 7, Just 8],[Jus
 testBoardD::Board
 testBoardD = [[Just 1,Just 2,Just 3, Just 4],[Just 5,Just 7,Just 6, Just 8],[Just 9,Just 10,Just 11, Just 12],[Just 13,Just 14,Just 15, Nothing]]
 
+testBoard6S::Board
+testBoard6S = [[Nothing, Just 1, Just 2, Just 3],[Just 5,Just 6,Just 7, Just 4],[Just 9,Just 10,Just 11, Just 8],[Just 13,Just 14,Just 15, Just 12]]
+
+testBoardUS::Board
+testBoardUS = [[Just 1,Just 2,Just 3],[Just 4,Just 6,Just 5],[Just 7,Just 8, Nothing]]
+
+
 -- returns the tile at the given position
 getTile :: Board -> Pos -> Tile
 getTile board (pos1, pos2) = board!!pos1!!pos2
@@ -48,6 +55,12 @@ flipTiles board pos1 pos2 = setMatrixValue pos1 (setMatrixValue pos2 board val1)
 		val1 = getTile board pos1
 		val2 = getTile board pos2
 
+-- find empty tile
+findEmpty :: Board -> Pos
+findEmpty board = head [ (i, j) | i <- [0 .. size - 1], j <- [0 .. size - 1], (getTile board (i, j)) == Nothing]
+	where
+		size = length board
+		
 -- check if board is in final state
 isFinal :: Board -> Bool
 isFinal board = isFinal' flatBoard len len
