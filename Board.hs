@@ -1,9 +1,23 @@
-type Tile = Maybe Integer
+module Board where
+
+type Tile = Maybe Int
 type Board = [[Tile]]
 type Pos = (Int, Int)
 
 testBoard::Board
 testBoard = [[Just 1,Just 2,Just 3],[Just 4,Just 5,Just 6],[Just 7,Just 8, Nothing]]
+
+testBoardA::Board
+testBoardA = [[Nothing,Just 2,Just 3],[Just 4,Just 5,Just 6],[Just 7,Just 8, Just 1]]
+
+testBoardB::Board
+testBoardB = [[Just 2,Nothing,Just 3],[Just 4,Just 5,Just 6],[Just 7,Just 8, Just 1]]
+
+testBoardC::Board
+testBoardC = [[Just 1,Just 2,Just 3, Just 4],[Just 5,Just 6,Just 7, Just 8],[Just 9,Just 10,Just 11, Just 12],[Just 13,Just 14,Just 15, Nothing]]
+
+testBoardD::Board
+testBoardD = [[Just 1,Just 2,Just 3, Just 4],[Just 5,Just 7,Just 6, Just 8],[Just 9,Just 10,Just 11, Just 12],[Just 13,Just 14,Just 15, Nothing]]
 
 -- returns the tile at the given position
 getTile :: Board -> Pos -> Tile
@@ -33,6 +47,33 @@ flipTiles board pos1 pos2 = setMatrixValue pos1 (setMatrixValue pos2 board val1)
 	where 
 		val1 = getTile board pos1
 		val2 = getTile board pos2
+
+-- check if board is in final state
+isFinal :: Board -> Bool
+isFinal board = isFinal' flatBoard len len
+	where
+		flatBoard = concat board
+		len = (length flatBoard)
+
+isFinal' :: [Tile] -> Int -> Int -> Bool
+isFinal' [Nothing] _ 1 = True
+isFinal' (Nothing:xs) _ _ = False
+isFinal' [] _ _ = False
+isFinal' ((Just a):xs) len pos
+	| (len - pos + 1) 	/= a 	= False
+	| otherwise 		= isFinal' xs len (pos - 1)
+
+		
+-- get twin board
+twin :: Board -> Board
+twin board
+	| len <= 1 								= board
+	| tile1 == Nothing || tile2 == Nothing	= flipTiles board (1,0) (1,1)
+	| otherwise 							= flipTiles board (0,0) (0,1)
+	where
+		len = length board
+		tile1 = getTile board (0, 0)
+		tile2 = getTile board (0, 1)
 		
 -- get manhattan distance of one tile to its final position
 manhattanTile :: Tile -> Int -> Pos -> Int
