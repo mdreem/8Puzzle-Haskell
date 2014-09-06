@@ -1,6 +1,6 @@
-import System.Environment
-import Search
-import Board
+import           Board
+import           Search
+import           System.Environment
 
 main = do
     [filename] <- getArgs
@@ -18,5 +18,5 @@ toPuzzleBoard b = [[ toTile (b!!i!!j) | j <- [0..len-1]] |  i <- [0..len-1]]
 
 toTile :: Int -> Tile
 toTile i
-    | i == 0    = Nothing 
+    | i == 0    = Nothing
     | otherwise = Just i

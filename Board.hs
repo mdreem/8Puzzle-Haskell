@@ -23,13 +23,13 @@ getPossiblePositions pos size = filter (allowedPos size) (possiblePositions pos)
 -- get a list of Boards with possible movements of a certain tile
 neighbours :: Pos -> Board -> [Board]
 neighbours pos board = map (flipTiles board pos) positions
-    where 
+    where
         len = length board
         positions = getPossiblePositions pos len
 
 flipTiles :: Board -> Pos -> Pos -> Board
 flipTiles board pos1 pos2 = setMatrixValue pos1 (setMatrixValue pos2 board val1) val2
-    where 
+    where
         val1 = getTile board pos1
         val2 = getTile board pos2
 
@@ -38,7 +38,7 @@ findEmpty :: Board -> Pos
 findEmpty board = head [ (i, j) | i <- [0 .. size - 1], j <- [0 .. size - 1], (getTile board (i, j)) == Nothing]
     where
         size = length board
-        
+
 -- check if board is in final state
 isFinal :: Board -> Bool
 isFinal board = isFinal' flatBoard len len
@@ -54,7 +54,7 @@ isFinal' ((Just a):xs) len pos
     | (len - pos + 1)   /= a = False
     | otherwise              = isFinal' xs len (pos - 1)
 
-        
+
 -- get twin board
 twin :: Board -> Board
 twin board
@@ -65,33 +65,33 @@ twin board
         len   = length board
         tile1 = getTile board (0, 0)
         tile2 = getTile board (0, 1)
-        
+
 -- get manhattan distance of one tile to its final position
 manhattanTile :: Tile -> Int -> Pos -> Int
 manhattanTile Nothing _ _ = 0
-manhattanTile tile size (oPosI, oPosJ) = abs(oPosI - posI) + abs(oPosJ - posJ) 
+manhattanTile tile size (oPosI, oPosJ) = abs(oPosI - posI) + abs(oPosJ - posJ)
     where
         (posI, posJ) = tilePosition tile size
 
 -- get manhattan distance of the whole board
 manhattanBoard :: Board -> Int
-manhattanBoard board = sum distBoard 
+manhattanBoard board = sum distBoard
     where
         size = length board
-        distBoard = [ manhattanTile (getTile board (i, j)) size (i, j) | i <- [0 .. size - 1], j <- [0 .. size - 1]]    
-        
+        distBoard = [ manhattanTile (getTile board (i, j)) size (i, j) | i <- [0 .. size - 1], j <- [0 .. size - 1]]
+
 -- given the value of a tile, return its position
 tilePosition :: Tile -> Int -> Pos
 tilePosition Nothing _ = (-1, -1)
 tilePosition (Just tile) size = (finPosI, finPosJ)
-    where 
+    where
         intTile = toInteger tile
         intSize = toInteger size
         finPosI = fromIntegral(quot (intTile - 1) intSize)
         finPosJ = fromIntegral(mod (intTile - 1) intSize)
-    
+
 pos1 (posA, posB) = posA
-        
+
 -- Takes the position of the element to change, the list and a function applied to the element we
 -- want to change
 setRow :: Int -> [a] -> (a -> a) -> [a]

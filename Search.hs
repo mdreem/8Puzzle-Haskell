@@ -1,6 +1,6 @@
 module Search where
 
-import Board
+import           Board
 import qualified Data.Heap as Heap
 
 -- Node steps priority board node
@@ -14,7 +14,7 @@ instance Ord SearchNode where
     (Node _ _ _ _) `compare` Nil               = GT
 
 -- solver
-solve::Board -> Maybe SearchNode    
+solve::Board -> Maybe SearchNode
 solve board
     | origBoard == board = Just (solve' heap twinHeap)
     | otherwise          = Nothing
@@ -36,8 +36,8 @@ solve' heap twinHeap
         Just twinNode        = Heap.viewHead twinHeap
         Node _ _ board _     = node
         Node _ _ twinBoard _ = twinNode
-    
--- takes the minimal element from the heap, takes all the neighbours and 
+
+-- takes the minimal element from the heap, takes all the neighbours and
 -- puts the respective search nodes back on the heap.
 step :: Heap.MinHeap SearchNode -> Heap.MinHeap SearchNode
 step heap = Heap.drop 1 (toHeap (map (nextNode node) nb) heap)
@@ -50,8 +50,8 @@ step heap = Heap.drop 1 (toHeap (map (nextNode node) nb) heap)
 nextNode node board = Node (s + 1) (s + 1 + manhattanBoard board) board node
     where
         (Node s p b n) = node
-    
--- adds a list of elements to a heap    
+
+-- adds a list of elements to a heap
 toHeap [] heap = heap
 toHeap (x:xs) heap = toHeap xs (Heap.insert x heap)
 
@@ -60,7 +60,7 @@ nodeList Nil = []
 nodeList node =  node:nodeList next
     where
         Node _ _ _ next = node
-        
+
 -- returns the board in the first node
 getOriginalBoard (x:[]) = b
     where
